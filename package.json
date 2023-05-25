@@ -1,0 +1,27 @@
+{
+  "name": "@unioncredit/v2-sdk",
+  "version": "1.0.0",
+  "description": "A library to help developers to easily build their own contracts to interact with Union v2 protocol.",
+  "scripts": {
+    "compile": "yarn hardhat compile",
+    "test": "yarn hardhat test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/unioncredit/union-v2-sdk.git"
+  },
+  "author": "Max Weng <max.m.weng@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "@nomiclabs/hardhat-ethers": "^2.0.5",
+    "@nomiclabs/hardhat-waffle": "^2.0.3",
+    "@openzeppelin/contracts": "^4.5.0",
+    "dotenv": "^16.0.0",
+    "hardhat": "^2.9.0",
+    "hardhat-deploy": "^0.10.5"
+  },
+  "devDependencies": {
+    "chai": "^4.3.6",
+    "ethers": "^5.5.4"
+  }
+}
