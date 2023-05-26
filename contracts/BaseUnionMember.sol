@@ -28,10 +28,9 @@ abstract contract BaseUnionMember {
         address _unionToken,
         address _underlyingToken
     ) {
-        (address _uToken, address _userManager) = IMarketRegistry(
-            _marketRegistry
-        ).uTokens(_underlyingToken);
         marketRegistry = IMarketRegistry(_marketRegistry);
+        address _uToken = marketRegistry.uTokens(_underlyingToken);
+        address _userManager = marketRegistry.userManagers(_underlyingToken);
         userManager = IUserManager(_userManager);
         uToken = IUToken(_uToken);
         unionToken = IERC20(_unionToken);

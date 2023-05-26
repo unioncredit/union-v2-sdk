@@ -12,19 +12,15 @@ import "./BaseUnionMember.sol";
  * @dev This contract has all the functions of Union borrower role.
  */
 abstract contract UnionBorrower is BaseUnionMember {
-    /**
-     *  @dev Get all the vouchers' addresses
-     *  @return Vouchers' addresses
-     */
-    function getStakerAddresses() public view returns (address[] memory) {
-        return userManager.getStakerAddresses(address(this));
+    function getVoucherCount() public view returns (uint256) {
+        return userManager.getVoucherCount(address(this));
     }
 
     /**
      *  @dev Get the member's available credit line
      *  @return Member's total credit limit
      */
-    function getCreditLimit() public view returns (int256) {
+    function getCreditLimit() public view returns (uint256) {
         return userManager.getCreditLimit(address(this));
     }
 
@@ -66,7 +62,7 @@ abstract contract UnionBorrower is BaseUnionMember {
      *  @param amount Amount to borrow (in wei)
      */
     function _borrow(uint256 amount) internal {
-        uToken.borrow(amount);
+        uToken.borrow(address(this), amount);
     }
 
     /**
@@ -75,17 +71,7 @@ abstract contract UnionBorrower is BaseUnionMember {
      */
     function _repayBorrow(uint256 amount) internal {
         underlyingToken.approve(address(uToken), amount);
-        uToken.repayBorrow(amount);
-    }
-
-    /**
-     *  @dev Repay the loan
-     *  @param account Borrower's address
-     *  @param amount Amount to repay (in wei)
-     */
-    function _repayBorrowBehalf(address account, uint256 amount) internal {
-        underlyingToken.approve(address(uToken), amount);
-        uToken.repayBorrowBehalf(account, amount);
+        uToken.repayBorrow(address(this), amount);
     }
 
     /**
@@ -102,7 +88,7 @@ abstract contract UnionBorrower is BaseUnionMember {
      * @param amount Amount of uToken to redeem (in wei)
      */
     function _redeem(uint256 amount) internal {
-        uToken.redeem(amount);
+        uToken.redeem(amount, 0);
     }
 
     /**
@@ -110,6 +96,6 @@ abstract contract UnionBorrower is BaseUnionMember {
      * @param amount Amount of underlying token (in wei)
      */
     function _redeemUnderlying(uint256 amount) internal {
-        uToken.redeemUnderlying(amount);
+        uToken.redeem(0, amount);
     }
 }
