@@ -11,12 +11,16 @@ import "./BaseUnionMember.sol";
  * @dev This contract has all the functions of Union voucher role.
  */
 abstract contract UnionVoucher is BaseUnionMember {
-    /**
-     *  @dev Get all the addresses the user vouched for
-     *  @return List of ddresses the user vouched for
-     */
-    function getBorrowerAddresses() public view returns (address[] memory) {
-        return userManager.getBorrowerAddresses(address(this));
+    function getVoucheeCount() public view returns (uint256) {
+        return userManager.getVoucheeCount(address(this));
+    }
+
+    function getTotalLockedStake() public view returns (uint256) {
+        return userManager.getTotalLockedStake(address(this));
+    }
+
+    function getLockedStake(address borrower) public view returns (uint256) {
+        return userManager.getLockedStake(address(this), borrower);
     }
 
     /**
@@ -32,7 +36,7 @@ abstract contract UnionVoucher is BaseUnionMember {
      *  @param account Recipient address
      *  @param amount Amount to vouch for (in wei)
      */
-    function _updateTrust(address account, uint256 amount) internal {
+    function _updateTrust(address account, uint96 amount) internal {
         userManager.updateTrust(account, amount);
     }
 
@@ -49,7 +53,7 @@ abstract contract UnionVoucher is BaseUnionMember {
      *  @dev Deposit to Union
      *  @param amount Amount to stake (in wei)
      */
-    function _stake(uint256 amount) internal {
+    function _stake(uint96 amount) internal {
         underlyingToken.approve(address(userManager), amount);
         userManager.stake(amount);
     }
@@ -58,7 +62,7 @@ abstract contract UnionVoucher is BaseUnionMember {
      *  @dev Withdraw from Union
      *  @param amount Amount to unstake (in wei)
      */
-    function _unstake(uint256 amount) internal {
+    function _unstake(uint96 amount) internal {
         userManager.unstake(amount);
     }
 
@@ -75,6 +79,6 @@ abstract contract UnionVoucher is BaseUnionMember {
      *  @param amount Amount of debt to write off (in wei)
      */
     function _debtWriteOff(address borrower, uint256 amount) internal {
-        userManager.debtWriteOff(borrower, amount);
+        userManager.debtWriteOff(address(this), borrower, amount);
     }
 }

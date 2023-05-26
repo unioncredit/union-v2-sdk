@@ -1,5 +1,7 @@
-//SPDX-License-Identifier: MIT
-pragma solidity 0.8.16;
+//SPDX-License-Identifier: UNLICENSED
+pragma solidity ^0.8.4;
+
+import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
 /**
  * @title UnionToken Interface
@@ -14,10 +16,7 @@ interface IUnionToken {
 
     function balanceOf(address account) external view returns (uint256);
 
-    function transfer(
-        address recipient,
-        uint256 amount
-    ) external returns (bool);
+    function transfer(address recipient, uint256 amount) external returns (bool);
 
     function mint(address account, uint256 amount) external returns (bool);
 
@@ -27,10 +26,7 @@ interface IUnionToken {
      *  @param blockNumber The block number to get the vote balance at
      *  @return The number of votes the account had as of the given block
      */
-    function getPriorVotes(
-        address account,
-        uint256 blockNumber
-    ) external view returns (uint256);
+    function getPriorVotes(address account, uint256 blockNumber) external view returns (uint256);
 
     /**
      *  @dev Allows to spend owner's Union tokens by the specified spender.
@@ -59,4 +55,6 @@ interface IUnionToken {
     function disableWhitelist() external;
 
     function approve(address, uint256) external;
+
+    function transferOwnership(address) external;
 }
