@@ -1,4 +1,4 @@
-//SPDX-License-Identifier: UNLICENSED
+//SPDX-License-Identifier: MIT
 pragma solidity ^0.8.4;
 
 /**
@@ -28,7 +28,9 @@ interface IUToken {
 
     function calculatingFee(uint256 amount) external view returns (uint256);
 
-    function calculatingInterest(address account) external view returns (uint256);
+    function calculatingInterest(
+        address account
+    ) external view returns (uint256);
 
     function borrowBalanceView(address account) external view returns (uint256);
 
